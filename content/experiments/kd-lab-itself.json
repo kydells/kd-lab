@@ -6,7 +6,7 @@
   "summary": "Started with a Shopify design gallery video and ended up with a live website. A full session building a public-facing experiment diary from scratch — design, infrastructure, CMS, and DNS in one sitting. The experiment documents its own blind spot: we built a mile-marking tool without mile-marking the build.",
   "tag": "AI + Design + Build",
   "status": "wip",
-  "tools": ["Claude Sonnet", "HTML / CSS", "GitHub", "Netlify", "Decap CMS", "Namecheap"],
+  "tools": ["Claude Sonnet", "HTML / CSS", "Figma", "GitHub", "Netlify", "Decap CMS", "Namecheap"],
 
   "header_artifact": {
     "label": "lab.kyliedella.com",
@@ -127,13 +127,6 @@
           "link_url_label": "github.com/kydells/kd-lab"
         },
         {
-          "type": "annotation",
-          "size": "small",
-          "eyebrow": "The tar file moment",
-          "body": "Tried to hand over the repo as a downloadable tar file. She can't download files from Claude. Ended up copy-pasting 6 files one at a time into GitHub's web UI. Very on brand.",
-          "footer": null
-        },
-        {
           "type": "link",
           "size": "medium",
           "link_type": "Artifact",
@@ -165,14 +158,14 @@
           "type": "annotation",
           "size": "medium",
           "eyebrow": "What the skill fixes",
-          "body": "The lab-session skill was written at the end of this session specifically because of this failure. Next session: `/mark` after every meaningful state. `/artifact` for every file produced. `/wrap` generates the CMS JSON.",
+          "body": "We created the lab-session skill at the end of this session specifically because of this failure. Next session: `/mark` after every meaningful state. `/artifact` for every file produced. `/wrap` generates the CMS JSON.",
           "footer": null
         },
         {
           "type": "annotation",
           "size": "medium",
           "eyebrow": "Honest grade",
-          "body": "A− for output, C for process documentation. The site is real, the CMS works, the skill exists. The build artifacts are gone.",
+          "body": "A− for output, C for process documentation. The site is live, the CMS works, the skill exists. The build artifacts are gone.",
           "footer": null
         },
         {
