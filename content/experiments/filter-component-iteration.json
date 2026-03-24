@@ -1,0 +1,246 @@
+{
+  "number": "01",
+  "title": "Filter Component",
+  "title_italic": "Iteration",
+  "date": "Jan 29, 2026",
+  "summary": "A clinical trial analytics app needed filtering that didn't terrify non-technical users. This is what happened when I let AI drive the exploration — and what I learned about how anchoring bias shapes the whole process.",
+  "tag": "AI + Design",
+  "status": "final",
+  "tools": ["Claude Sonnet", "Figma", "HTML / CSS", "Framer"],
+
+  "header_artifact": {
+    "label": "Compact interactive filter modal",
+    "subtitle": "final prototype",
+    "interactive": true,
+    "url": "#",
+    "url_label": "HTML prototype · lab.kyliedella.com",
+    "image": null
+  },
+
+  "pages": [
+    {
+      "label": "Discovery",
+      "id": "discovery",
+      "tiles": [
+        {
+          "type": "image",
+          "size": "large",
+          "eyebrow": "Filter modal · initial state",
+          "image": null,
+          "image_alt": "Screenshot of the initial filter modal design"
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "The problem",
+          "body": "Users understood the filter logic. They just *hated looking at it.* The modal felt clinical — which is ironic, given the context.",
+          "footer": "Clinical trial data · 50+ variable columns"
+        },
+        {
+          "type": "link",
+          "size": "medium",
+          "link_type": "Prototype",
+          "link_title": "Direction 5 — Visual query builder exploration",
+          "url": "#",
+          "link_url_label": "lab.kyliedella.com/artifacts/visual-query-builder"
+        },
+        {
+          "type": "annotation",
+          "size": "small",
+          "eyebrow": "Starting prompt",
+          "body": "I gave Claude the current design first. Big mistake — it anchored everything that followed.",
+          "footer": "Mode 3 when I needed Mode 1"
+        },
+        {
+          "type": "image",
+          "size": "large",
+          "eyebrow": "5 directional approaches generated · first pass",
+          "image": null,
+          "image_alt": "Screenshot showing five directional approaches"
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "What I missed",
+          "body": "I was solving \"make this modal nicer\" when the real question was *\"is a modal even the right pattern?\"*"
+        },
+        {
+          "type": "link",
+          "size": "medium",
+          "link_type": "Prototype",
+          "link_title": "Compact interactive filter modal — final prototype",
+          "url": "#",
+          "link_url_label": "lab.kyliedella.com/artifacts/compact-filter-modal"
+        }
+      ]
+    },
+    {
+      "label": "Iteration",
+      "id": "iteration",
+      "tiles": [
+        {
+          "type": "image",
+          "size": "large",
+          "eyebrow": "Lighter modal · iteration 2",
+          "image": null,
+          "image_alt": "Screenshot of the lighter modal iteration"
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "Density reduction",
+          "body": "Tighter spacing, horizontal layout. ~65% less visual weight than the original. Same functionality.",
+          "footer": "Spacing · layout · hierarchy"
+        },
+        {
+          "type": "link",
+          "size": "medium",
+          "link_type": "Prototype",
+          "link_title": "Lighter filter modal — breathing room iteration",
+          "url": "#",
+          "link_url_label": "lab.kyliedella.com/artifacts/lighter-filter-modal"
+        },
+        {
+          "type": "annotation",
+          "size": "small",
+          "eyebrow": "Prompt structure",
+          "body": "\"Optimize this aspect\" framing kept iteration tight. *Narrowly useful* — I wasn't questioning the paradigm."
+        },
+        {
+          "type": "image",
+          "size": "large",
+          "eyebrow": "Scalability test · 50+ column dataset",
+          "image": null,
+          "image_alt": "Screenshot of scalability test with large dataset"
+        },
+        {
+          "type": "link",
+          "size": "medium",
+          "link_type": "Chat snippet",
+          "link_title": "The conversation where I noticed the anchoring bias",
+          "url": "#",
+          "link_url_label": "lab.kyliedella.com/chats/filter-anchoring-moment"
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "Key iteration",
+          "body": "Interactive prototype to test scalability at 50+ columns. This is where it started to hold up."
+        }
+      ]
+    },
+    {
+      "label": "Outcome",
+      "id": "outcome",
+      "tiles": [
+        {
+          "type": "image",
+          "size": "large",
+          "eyebrow": "Compact interactive filter modal · final",
+          "image": null,
+          "image_alt": "Screenshot of the final compact filter modal"
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "What shipped",
+          "body": "The modal pattern survived. *Refined, not replaced.* The hypothesis was right — execution was the problem."
+        },
+        {
+          "type": "link",
+          "size": "medium",
+          "link_type": "Prototype",
+          "link_title": "Final prototype — compact interactive filter modal",
+          "url": "#",
+          "link_url_label": "lab.kyliedella.com/artifacts/compact-filter-modal"
+        },
+        {
+          "type": "annotation",
+          "size": "small",
+          "eyebrow": "Honest outcome",
+          "body": "Validated existing direction. Not a bad result — but I wasn't exploring. *I was refining.*"
+        },
+        {
+          "type": "image",
+          "size": "large",
+          "eyebrow": "Before / after density comparison",
+          "image": null,
+          "image_alt": "Before and after comparison of filter modal density"
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "The actual finding",
+          "body": "The experiment revealed more about *how to use AI* than about the filter problem itself. That's the artifact worth keeping."
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "Artifacts created",
+          "body": "3 prototypes · 1 modes framework · 1 documented experiment"
+        }
+      ]
+    },
+    {
+      "label": "Reflection",
+      "id": "reflection",
+      "tiles": [
+        {
+          "type": "annotation",
+          "size": "large",
+          "eyebrow": "The modes framework",
+          "body": "Mode 1 · Blank Page Generation\nMode 2 · Alternative Exploration\n*Mode 3 · Validation / Refinement ← used this*\nMode 4 · Critique\nMode 5 · Constraint Testing"
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "Key learning",
+          "body": "Showing existing work *first* anchors AI toward iteration within that paradigm."
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "Next time",
+          "body": "State the mode explicitly before prompting. Describe the problem *before* showing the design."
+        },
+        {
+          "type": "annotation",
+          "size": "small",
+          "eyebrow": "What I'd do differently",
+          "body": "Start with Mode 1. Ask for 5-10 wildly different solutions before validating any direction."
+        },
+        {
+          "type": "image",
+          "size": "large",
+          "eyebrow": "Modes framework documentation · artifact",
+          "image": null,
+          "image_alt": "Modes framework documentation artifact"
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "Honest grade",
+          "body": "B-. Good process, wrong mode. The meta-learning was worth more than the design output."
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "Time spent",
+          "body": "~3 hrs total · 45 min prompting · 2 hrs in Figma"
+        }
+      ]
+    }
+  ],
+
+  "prev_experiment": null,
+
+  "next_experiment": {
+    "slug": "modes-framework-in-practice",
+    "number": "02",
+    "title": "Modes Framework",
+    "title_italic": "in Practice",
+    "date": "Feb 2026",
+    "tag": "AI + Research",
+    "thumbnail": null
+  }
+}
