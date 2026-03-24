@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>kd.lab · experiment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F7F5F0;
+    --warm-white: #FDFCFA;
+    --ink: #1A1916;
+    --ink-mid: #4A4844;
+    --ink-light: #9A9690;
+    --ink-faint: #E8E5DF;
+    --accent: #C8442A;
+    --accent-soft: rgba(200, 68, 42, 0.08);
+    --serif: 'Lora', Georgia, serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --tile-radius: 10px;
+    --col-width: 880px;
+    --wide-width: 1080px;
+    --col-pad: 40px;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* ── Nav ── */
+  .nav-outer {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(247, 245, 240, 0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--ink-faint);
+  }
+
+  .nav-inner {
+    max-width: var(--wide-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px var(--col-pad);
+  }
+
+  .nav-wordmark {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .nav-wordmark span { color: var(--ink-light); }
+
+  .nav-right { display: flex; align-items: center; gap: 24px; }
+
+  .nav-link {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--ink-mid);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--ink); }
+
+  /* ── Layout ── */
+  main {
+    padding-top: 72px;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
+
+  .col {
+    max-width: var(--col-width);
+    margin: 0 auto;
+    padding: 0 var(--col-pad);
+  }
+
+  /* ── Header ── */
+  .experiment-header {
+    padding-top: 52px;
+    padding-bottom: 24px;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  .experiment-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .meta-text {
+    font-family: var(--mono);
+    font-size: 0.67rem;
+    color: var(--ink-light);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .meta-dot {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--ink-faint);
+    flex-shrink: 0;
+  }
+
+  .experiment-tag {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid rgba(200, 68, 42, 0.15);
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .experiment-title {
+    font-family: var(--serif);
+    font-size: clamp(1.9rem, 4vw, 2.9rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 14px;
+    font-weight: 400;
+  }
+  .experiment-title em { font-style: italic; color: var(--ink-mid); }
+
+  .experiment-summary {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--ink-mid);
+    max-width: 580px;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .header-tools {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tools-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--ink-light);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-right: 2px;
+  }
+
+  .tool-pill {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--ink-mid);
+    border: 1px solid var(--ink-faint);
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.03em;
+    background: var(--warm-white);
+  }
+
+  /* ── Header artifact ── */
+  .header-artifact {
+    padding-bottom: 28px;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.6s ease 0.1s forwards;
+  }
+
+  .artifact-tile {
+    width: 100%;
+    height: 260px;
+    border-radius: var(--tile-radius);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  .artifact-tile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px rgba(26, 25, 22, 0.09);
+  }
+
+  .artifact-tile.is-final { border: 1.5px solid rgba(26, 25, 22, 0.15); }
+  .artifact-tile.is-wip   { border: 2px dashed rgba(26, 25, 22, 0.22); }
+
+  .artifact-preview {
+    width: 100%; height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .is-final .artifact-preview { background: linear-gradient(160deg, #E8E5DF 0%, #D4D0C8 100%); }
+  .is-wip   .artifact-preview {
+    background: repeating-linear-gradient(-45deg, #EDE8DF, #EDE8DF 14px, #E5E0D6 14px, #E5E0D6 28px);
+  }
+
+  .artifact-preview img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .artifact-placeholder-label {
+    font-family: var(--mono);
+    font-size: 0.67rem;
+    color: var(--ink-light);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.9;
+    z-index: 1;
+    background: rgba(247, 245, 240, 0.72);
+    padding: 10px 18px;
+    border-radius: 4px;
+  }
+
+  .artifact-hover-cta {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 8px;
+    background: rgba(26, 25, 22, 0.55);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 20;
+  }
+  .artifact-tile:hover .artifact-hover-cta { opacity: 1; }
+
+  .cta-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: rgba(247, 245, 240, 0.92);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .cta-icon { font-size: 1.3rem; color: rgba(247, 245, 240, 0.65); }
+
+  .artifact-status-bar {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    margin-top: 9px; padding: 0 2px;
+  }
+
+  .artifact-status-left { display: flex; align-items: center; gap: 8px; }
+
+  .status-badge {
+    display: flex; align-items: center; gap: 5px;
+    font-family: var(--mono); font-size: 0.6rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 20px;
+  }
+
+  .status-badge.final { color: var(--ink-mid); background: var(--ink-faint); border: 1px solid rgba(26,25,22,0.08); }
+  .status-badge.wip   { color: #7A5C1E; background: rgba(197,158,60,0.1); border: 1px solid rgba(197,158,60,0.25); }
+
+  .status-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+  .status-badge.final .status-dot { background: var(--ink-light); }
+  .status-badge.wip   .status-dot { background: #C5983C; animation: pulse 2s ease-in-out infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(0.6); }
+  }
+
+  .interactive-badge {
+    display: flex; align-items: center; gap: 5px;
+    font-family: var(--mono); font-size: 0.6rem;
+    color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase;
+    background: var(--accent-soft); border: 1px solid rgba(200,68,42,0.15);
+    padding: 4px 10px; border-radius: 20px;
+  }
+
+  .interactive-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+
+  .artifact-type-label {
+    font-family: var(--mono); font-size: 0.58rem;
+    color: var(--ink-light); letter-spacing: 0.04em;
+  }
+
+  /* ── Page nav ── */
+  .page-nav-wrapper {
+    max-width: var(--wide-width);
+    margin: 0 auto;
+    padding: 0 var(--col-pad) 28px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.18s forwards;
+  }
+
+  .page-nav {
+    display: flex; align-items: center;
+    width: 100%;
+    background: var(--warm-white);
+    border: 1px solid var(--ink-faint);
+    border-radius: 40px;
+    padding: 8px 8px;
+  }
+
+  .page-btn {
+    font-family: var(--mono); font-size: 0.63rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink-light); background: none; border: none;
+    cursor: pointer; padding: 8px 0; border-radius: 20px;
+    transition: all 0.16s ease; white-space: nowrap;
+    flex: 1; text-align: center;
+  }
+  .page-btn:hover { color: var(--ink); background: var(--ink-faint); }
+  .page-btn.active { background: var(--ink); color: var(--cream); }
+
+  .page-divider { width: 1px; height: 14px; background: var(--ink-faint); margin: 0 2px; flex-shrink: 0; }
+
+  /* ── Canvas ── */
+  .canvas { padding-bottom: 60px; }
+
+  /* ── Tile grid ── */
+  .tile-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 80px;
+    gap: 12px;
+  }
+
+  /* Dynamic grid placements by size + sequence */
+  .tile-large-image  { grid-column: span 7; grid-row: span 4; }
+  .tile-large-annotation { grid-column: span 7; grid-row: span 4; }
+  .tile-medium       { grid-column: span 5; grid-row: span 2; }
+  .tile-small        { grid-column: span 5; grid-row: span 2; }
+
+  /* ── Base tile ── */
+  .tile {
+    background: var(--warm-white);
+    border: 1px solid var(--ink-faint);
+    border-radius: var(--tile-radius);
+    overflow: hidden;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: border-color 0.2s ease;
+  }
+  .tile:hover { border-color: rgba(26,25,22,0.2); }
+
+  /* Image tile */
+  .tile-image { cursor: default; }
+
+  .tile-img-wrap {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #E8E5DF 0%, #D8D4CC 100%);
+    position: relative; overflow: hidden;
+  }
+
+  .tile-img-wrap::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(26,25,22,0.025) 20px, rgba(26,25,22,0.025) 21px);
+  }
+
+  .tile-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    position: absolute; inset: 0;
+    z-index: 1;
+  }
+
+  .placeholder-label {
+    font-family: var(--mono); font-size: 0.62rem;
+    color: var(--ink-light); letter-spacing: 0.06em;
+    text-transform: uppercase; z-index: 1;
+    text-align: center; padding: 16px; line-height: 1.7;
+  }
+
+  .tile-image-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 14px 16px;
+    background: linear-gradient(transparent, rgba(26,25,22,0.55));
+    opacity: 0; transition: opacity 0.2s; z-index: 2;
+  }
+  .tile-image:hover .tile-image-overlay { opacity: 1; }
+
+  .tile-image-label {
+    font-family: var(--mono); font-size: 0.6rem;
+    color: rgba(247,245,240,0.9); letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* Annotation tile */
+  .tile-annotation {
+    padding: 18px 20px;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Special rendering for modes framework tile */
+  .tile-annotation.modes-list {
+    padding: 24px;
+    justify-content: flex-start;
+    gap: 0;
+  }
+
+  .annotation-eyebrow {
+    font-family: var(--mono); font-size: 0.58rem;
+    color: var(--ink-light); letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 9px;
+  }
+
+  .annotation-body {
+    font-family: var(--serif); font-size: 0.93rem;
+    line-height: 1.52; color: var(--ink); flex: 1; font-weight: 400;
+  }
+  .annotation-body em { font-style: italic; color: var(--ink-mid); }
+
+  .annotation-footer {
+    margin-top: 10px; padding-top: 9px;
+    border-top: 1px solid var(--ink-faint);
+    font-family: var(--mono); font-size: 0.58rem;
+    color: var(--ink-light); letter-spacing: 0.04em;
+  }
+
+  /* Modes list items */
+  .modes-list-items {
+    display: flex; flex-direction: column; gap: 8px; flex: 1;
+    margin-top: 14px;
+  }
+
+  .mode-item {
+    font-family: var(--mono); font-size: 0.63rem;
+    color: var(--ink-mid); padding: 7px 11px;
+    background: var(--cream); border-radius: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  .mode-item.active {
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid rgba(200,68,42,0.15);
+  }
+
+  /* Link tile */
+  .tile-link {
+    padding: 18px 20px;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer; text-decoration: none; color: inherit;
+  }
+
+  .link-top { display: flex; align-items: flex-start; justify-content: space-between; }
+
+  .link-type {
+    font-family: var(--mono); font-size: 0.58rem;
+    color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase;
+    background: var(--accent-soft); border: 1px solid rgba(200,68,42,0.15);
+    padding: 3px 7px; border-radius: 3px;
+  }
+
+  .link-arrow {
+    font-size: 0.95rem; color: var(--ink-light);
+    transition: transform 0.18s ease, color 0.18s ease;
+    line-height: 1; flex-shrink: 0;
+  }
+  .tile-link:hover .link-arrow { transform: translate(3px,-3px); color: var(--ink); }
+
+  .link-title {
+    font-family: var(--serif); font-size: 0.95rem;
+    line-height: 1.38; color: var(--ink);
+    margin-top: 10px; font-weight: 400;
+  }
+
+  .link-url {
+    font-family: var(--mono); font-size: 0.56rem;
+    color: var(--ink-light); letter-spacing: 0.04em;
+    margin-top: 7px; white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+
+  /* ── Footer ── */
+  .experiment-footer {
+    max-width: var(--wide-width);
+    margin: 0 auto;
+    padding: 0 var(--col-pad) 80px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.3s forwards;
+  }
+
+  .footer-divider { height: 1px; background: var(--ink-faint); margin-bottom: 40px; }
+
+  .footer-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+
+  .footer-experiment {
+    display: flex; flex-direction: column; gap: 10px;
+    text-decoration: none; color: inherit;
+    transition: transform 0.22s ease;
+  }
+  .footer-experiment:hover { transform: translateY(-3px); }
+  .footer-experiment.next { text-align: right; align-items: flex-end; }
+
+  .footer-direction {
+    font-family: var(--mono); font-size: 0.62rem;
+    color: var(--ink-light); letter-spacing: 0.08em;
+    text-transform: uppercase; display: flex;
+    align-items: center; gap: 8px; margin-bottom: 4px;
+  }
+  .footer-experiment.next .footer-direction { justify-content: flex-end; }
+
+  .footer-direction-arrow {
+    font-size: 0.9rem; color: var(--ink-mid);
+    transition: transform 0.2s ease, color 0.2s ease;
+    display: inline-block;
+  }
+  .footer-experiment:not(.next):hover .footer-direction-arrow { transform: translateX(-5px); color: var(--ink); }
+  .footer-experiment.next:hover .footer-direction-arrow        { transform: translateX(5px);  color: var(--ink); }
+
+  .footer-thumb {
+    width: 100%; height: 72px; border-radius: 6px;
+    background: linear-gradient(135deg, #E8E5DF 0%, #D8D4CC 100%);
+    position: relative; overflow: hidden; flex-shrink: 0;
+    border: 1px solid var(--ink-faint);
+  }
+
+  .footer-thumb::after {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 14px, rgba(26,25,22,0.025) 14px, rgba(26,25,22,0.025) 15px);
+  }
+
+  .footer-thumb img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block; position: absolute; inset: 0; z-index: 1;
+  }
+
+  .footer-thumb-label {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 0.55rem;
+    color: var(--ink-light); letter-spacing: 0.06em;
+    text-transform: uppercase; z-index: 1;
+  }
+
+  .footer-exp-meta { font-family: var(--mono); font-size: 0.62rem; color: var(--ink-light); letter-spacing: 0.05em; }
+
+  .footer-exp-title { font-family: var(--serif); font-size: 1.2rem; line-height: 1.25; color: var(--ink); font-weight: 400; }
+  .footer-exp-title em { font-style: italic; color: var(--ink-mid); }
+
+  .footer-exp-tag {
+    font-family: var(--mono); font-size: 0.58rem;
+    color: var(--accent); background: var(--accent-soft);
+    border: 1px solid rgba(200,68,42,0.15);
+    padding: 2px 7px; border-radius: 3px;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    align-self: flex-start;
+  }
+  .footer-experiment.next .footer-exp-tag { align-self: flex-end; }
+
+  /* ── Animations ── */
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+  /* ── Mobile page nav ── */
+  .page-nav-mobile {
+    display: none;
+    align-items: center; justify-content: space-between;
+    padding-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.18s forwards;
+  }
+
+  .mobile-nav-caret {
+    background: none; border: 1px solid var(--ink-faint);
+    border-radius: 50%; width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 1.1rem; color: var(--ink-mid);
+    transition: all 0.16s ease; flex-shrink: 0;
+  }
+  .mobile-nav-caret:hover { background: var(--ink-faint); color: var(--ink); }
+  .mobile-nav-caret:disabled { opacity: 0.3; cursor: default; }
+  .mobile-nav-caret:disabled:hover { background: none; color: var(--ink-mid); }
+
+  .mobile-nav-label { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+  .mobile-nav-current {
+    font-family: var(--mono); font-size: 0.72rem;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    background: var(--ink); color: var(--cream);
+    padding: 10px 28px; border-radius: 30px;
+  }
+
+  .mobile-nav-dots { display: flex; gap: 5px; align-items: center; }
+
+  .mobile-nav-dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--ink-faint); transition: background 0.16s ease;
+  }
+  .mobile-nav-dot.active { background: var(--ink-mid); }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    .col { padding: 0 20px; }
+    .nav-inner { padding: 16px 20px; }
+    .page-nav-wrapper { padding: 0 20px 24px; }
+    .page-nav { display: none; }
+    .page-nav-mobile { display: flex; }
+    .header-tools { gap: 5px; row-gap: 6px; }
+    .artifact-status-bar { flex-wrap: wrap; gap: 8px; }
+    .artifact-type-label { width: 100%; }
+    .tile-grid { display: flex; flex-direction: column; gap: 10px; }
+    .tile-image { min-height: 200px; }
+    .tile-annotation { min-height: 140px; }
+    .tile-link { min-height: 130px; }
+    .experiment-footer { padding: 0 20px 60px; }
+    .footer-nav { grid-template-columns: 1fr; gap: 32px; }
+    .footer-experiment.next { text-align: left; align-items: flex-start; }
+    .footer-experiment.next .footer-direction { justify-content: flex-start; }
+    .footer-experiment.next .footer-exp-tag { align-self: flex-start; }
+  }
+
+  /* ── Loading state ── */
+  .loading {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 60vh;
+    font-family: var(--mono); font-size: 0.7rem;
+    color: var(--ink-light); letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-outer">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-wordmark">kd<span>.lab</span></a>
+    <div class="nav-right">
+      <a href="/index.html" class="nav-link">All experiments</a>
+      <a href="https://www.kyliedella.com" class="nav-link">↗ Portfolio</a>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+  <div class="loading">Loading experiment…</div>
+</main>
+
+<script>
+// ─────────────────────────────────────────────
+// Grid layout engine
+// Assigns grid classes based on tile type + size
+// ─────────────────────────────────────────────
+function gridClass(tile) {
+  if (tile.type === 'image' && tile.size === 'large') return 'tile-large-image';
+  if (tile.type === 'annotation' && tile.size === 'large') return 'tile-large-annotation';
+  return 'tile-medium';
+}
+
+// ─────────────────────────────────────────────
+// Text renderer — converts *italic* markers
+// ─────────────────────────────────────────────
+function renderText(text) {
+  if (!text) return '';
+  return text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+}
+
+// ─────────────────────────────────────────────
+// Tile renderers
+// ─────────────────────────────────────────────
+function renderImageTile(tile) {
+  const hasImage = tile.image && tile.image !== 'null' && tile.image !== null;
+  return `
+    <div class="tile tile-image ${gridClass(tile)}">
+      <div class="tile-img-wrap">
+        ${hasImage
+          ? `<img src="${tile.image}" alt="${tile.image_alt || ''}">`
+          : `<div class="placeholder-label">${tile.eyebrow || '· image ·'}</div>`
+        }
+      </div>
+      ${tile.eyebrow ? `
+        <div class="tile-image-overlay">
+          <div class="tile-image-label">${tile.eyebrow}</div>
+        </div>` : ''}
+    </div>`;
+}
+
+function renderAnnotationTile(tile) {
+  // Special case: modes framework list
+  const isModesList = tile.body && tile.body.includes('\n') && tile.body.includes('Mode');
+  if (isModesList) {
+    const lines = tile.body.split('\n').filter(l => l.trim());
+    const items = lines.map(line => {
+      const isActive = line.startsWith('*') && line.endsWith('*');
+      const text = line.replace(/^\*/, '').replace(/\*$/, '');
+      return `<div class="mode-item${isActive ? ' active' : ''}">${text}</div>`;
+    }).join('');
+    return `
+      <div class="tile tile-annotation modes-list ${gridClass(tile)}">
+        <div class="annotation-eyebrow">${tile.eyebrow || ''}</div>
+        <div class="modes-list-items">${items}</div>
+      </div>`;
+  }
+
+  return `
+    <div class="tile tile-annotation ${gridClass(tile)}">
+      ${tile.eyebrow ? `<div class="annotation-eyebrow">${tile.eyebrow}</div>` : ''}
+      <div class="annotation-body">${renderText(tile.body || '')}</div>
+      ${tile.footer ? `<div class="annotation-footer">${tile.footer}</div>` : ''}
+    </div>`;
+}
+
+function renderLinkTile(tile) {
+  return `
+    <a class="tile tile-link ${gridClass(tile)}" href="${tile.url || '#'}" target="_blank" rel="noopener">
+      <div class="link-top">
+        <span class="link-type">${tile.link_type || 'Link'}</span>
+        <span class="link-arrow">↗</span>
+      </div>
+      <div class="link-title">${tile.link_title || ''}</div>
+      ${tile.link_url_label ? `<div class="link-url">${tile.link_url_label}</div>` : ''}
+    </a>`;
+}
+
+function renderTile(tile) {
+  if (tile.type === 'image')      return renderImageTile(tile);
+  if (tile.type === 'annotation') return renderAnnotationTile(tile);
+  if (tile.type === 'link')       return renderLinkTile(tile);
+  return '';
+}
+
+// ─────────────────────────────────────────────
+// Page renderer
+// ─────────────────────────────────────────────
+function renderPage(page, isActive) {
+  const tiles = (page.tiles || []).map(renderTile).join('');
+  return `
+    <div class="page-content${isActive ? ' active' : ''}" id="page-${page.id}">
+      <div class="tile-grid">${tiles}</div>
+    </div>`;
+}
+
+// ─────────────────────────────────────────────
+// Footer renderer
+// ─────────────────────────────────────────────
+function renderFooterExperiment(exp, direction) {
+  if (!exp) return `<div class="footer-experiment ${direction}"></div>`;
+  const hasThumb = exp.thumbnail && exp.thumbnail !== 'null' && exp.thumbnail !== null;
+  const titleParts = exp.title_italic
+    ? `${exp.title} <em>${exp.title_italic}</em>`
+    : exp.title || '';
+  return `
+    <a class="footer-experiment ${direction}" href="/experiment/${exp.slug || '#'}">
+      <div class="footer-direction">
+        ${direction === 'prev' ? '<span class="footer-direction-arrow">←</span> Previous experiment' : ''}
+        ${direction === 'next' ? 'Next experiment <span class="footer-direction-arrow">→</span>' : ''}
+      </div>
+      <div class="footer-thumb">
+        ${hasThumb
+          ? `<img src="${exp.thumbnail}" alt="${exp.title}">`
+          : `<div class="footer-thumb-label">· ${exp.number ? 'experiment ' + exp.number : 'coming soon'} ·</div>`}
+      </div>
+      <div class="footer-exp-meta">Experiment ${exp.number || '—'} · ${exp.date || ''}</div>
+      <div class="footer-exp-title">${titleParts}</div>
+      ${exp.tag ? `<span class="footer-exp-tag">${exp.tag}</span>` : ''}
+    </a>`;
+}
+
+// ─────────────────────────────────────────────
+// Main render function
+// ─────────────────────────────────────────────
+function renderExperiment(data) {
+  const pages = data.pages || [];
+  const pageLabels = pages.map(p => p.label);
+  const pageIds    = pages.map(p => p.id);
+
+  // Title
+  const titleHTML = data.title_italic
+    ? `${data.title} <em>${data.title_italic}</em>`
+    : data.title || 'Untitled';
+
+  // Tools
+  const toolsHTML = (data.tools || [])
+    .map(t => `<span class="tool-pill">${t}</span>`)
+    .join('');
+
+  // Header artifact
+  const artifact = data.header_artifact || {};
+  const hasArtImage = artifact.image && artifact.image !== 'null' && artifact.image !== null;
+  const statusClass = data.status === 'wip' ? 'wip' : 'final';
+  const statusLabel = data.status === 'wip' ? 'In progress' : 'Final artifact';
+
+  // Page nav buttons
+  const navBtns = pages.map((p, i) => `
+    ${i > 0 ? '<div class="page-divider"></div>' : ''}
+    <button class="page-btn${i === 0 ? ' active' : ''}" data-page="${p.id}" onclick="switchPage(this)">${p.label}</button>
+  `).join('');
+
+  // Mobile dots
+  const mobileDots = pages.map((_, i) =>
+    `<div class="mobile-nav-dot${i === 0 ? ' active' : ''}"></div>`
+  ).join('');
+
+  // Page contents
+  const pagesHTML = pages.map((p, i) => renderPage(p, i === 0)).join('');
+
+  // Footer
+  const prevHTML = data.prev_experiment
+    ? renderFooterExperiment(data.prev_experiment, 'prev')
+    : `<div class="footer-experiment prev"><div class="footer-direction"><span class="footer-direction-arrow">←</span> Previous experiment</div><div class="footer-thumb"><div class="footer-thumb-label">· first experiment ·</div></div></div>`;
+  const nextHTML = data.next_experiment
+    ? renderFooterExperiment(data.next_experiment, 'next')
+    : `<div class="footer-experiment next"><div class="footer-direction">Next experiment <span class="footer-direction-arrow">→</span></div><div class="footer-thumb"><div class="footer-thumb-label">· more coming soon ·</div></div></div>`;
+
+  document.title = `kd.lab · ${data.title || 'Experiment'}`;
+
+  document.getElementById('main').innerHTML = `
+
+    <div class="col">
+      <header class="experiment-header">
+        <div class="experiment-meta">
+          <span class="meta-text">Experiment ${data.number || '—'}</span>
+          <span class="meta-dot"></span>
+          <span class="meta-text">${data.date || ''}</span>
+          <span class="meta-dot"></span>
+          <span class="experiment-tag">${data.tag || ''}</span>
+        </div>
+        <h1 class="experiment-title">${titleHTML}</h1>
+        <p class="experiment-summary">${data.summary || ''}</p>
+        <div class="header-tools">
+          <span class="tools-label">Tools</span>
+          ${toolsHTML}
+        </div>
+      </header>
+    </div>
+
+    <div class="col">
+      <div class="header-artifact">
+        <div class="artifact-tile ${statusClass === 'wip' ? 'is-wip' : 'is-final'}"
+             ${artifact.url ? `onclick="window.open('${artifact.url}','_blank')"` : ''}>
+          <div class="artifact-preview">
+            ${hasArtImage
+              ? `<img src="${artifact.image}" alt="${artifact.label || ''}">`
+              : `<div class="artifact-placeholder-label">${artifact.label || ''}${artifact.subtitle ? '<br>· ' + artifact.subtitle + ' ·' : ''}</div>`
+            }
+          </div>
+          ${artifact.url ? `
+          <div class="artifact-hover-cta">
+            <div class="cta-icon">⟶</div>
+            <div class="cta-label">Open prototype</div>
+          </div>` : ''}
+        </div>
+        <div class="artifact-status-bar">
+          <div class="artifact-status-left">
+            <div class="status-badge ${statusClass}">
+              <div class="status-dot"></div>
+              ${statusLabel}
+            </div>
+            ${artifact.interactive ? `
+            <div class="interactive-badge">
+              <div class="interactive-badge-dot"></div>
+              Interactive
+            </div>` : ''}
+          </div>
+          ${artifact.url_label ? `<div class="artifact-type-label">${artifact.url_label}</div>` : ''}
+        </div>
+      </div>
+    </div>
+
+    <div class="page-nav-wrapper">
+      <nav class="page-nav" aria-label="Experiment pages">
+        ${navBtns}
+      </nav>
+      <div class="page-nav-mobile" aria-label="Experiment pages mobile">
+        <button class="mobile-nav-caret" id="mobile-prev" onclick="mobileNav(-1)" disabled>‹</button>
+        <div class="mobile-nav-label">
+          <span class="mobile-nav-current" id="mobile-current-label">${pageLabels[0] || ''}</span>
+          <div class="mobile-nav-dots" id="mobile-dots">${mobileDots}</div>
+        </div>
+        <button class="mobile-nav-caret" id="mobile-next" onclick="mobileNav(1)"
+          ${pages.length <= 1 ? 'disabled' : ''}>›</button>
+      </div>
+    </div>
+
+    <div class="col canvas">${pagesHTML}</div>
+
+    <footer class="experiment-footer">
+      <div class="footer-divider"></div>
+      <div class="footer-nav">
+        ${prevHTML}
+        ${nextHTML}
+      </div>
+    </footer>
+  `;
+
+  // Expose page data to navigation functions
+  window._pages = pageIds;
+  window._pageLabels = pageLabels;
+  window._currentPage = 0;
+
+  // Animate initial tiles
+  setTimeout(() => {
+    const tiles = document.querySelectorAll('.page-content.active .tile');
+    tiles.forEach((t, i) => {
+      setTimeout(() => {
+        t.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.2s';
+        t.style.opacity = '1';
+        t.style.transform = 'translateY(0)';
+      }, 280 + i * 55);
+    });
+  }, 100);
+}
+
+// ─────────────────────────────────────────────
+// Navigation
+// ─────────────────────────────────────────────
+function animateTiles(page) {
+  const tiles = page.querySelectorAll('.tile');
+  tiles.forEach(t => { t.style.opacity = '0'; t.style.transform = 'translateY(18px)'; });
+  requestAnimationFrame(() => {
+    tiles.forEach((t, i) => {
+      setTimeout(() => {
+        t.style.transition = 'opacity 0.4s ease, transform 0.4s ease, border-color 0.2s';
+        t.style.opacity = '1';
+        t.style.transform = 'translateY(0)';
+      }, i * 45);
+    });
+  });
+}
+
+function goToPage(index) {
+  const pages = window._pages || [];
+  const labels = window._pageLabels || [];
+  window._currentPage = index;
+
+  document.querySelectorAll('.page-btn').forEach((b, i) => b.classList.toggle('active', i === index));
+  document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+
+  const page = document.getElementById('page-' + pages[index]);
+  if (page) { page.classList.add('active'); animateTiles(page); }
+
+  const label = document.getElementById('mobile-current-label');
+  if (label) label.textContent = labels[index] || '';
+
+  const prev = document.getElementById('mobile-prev');
+  const next = document.getElementById('mobile-next');
+  if (prev) prev.disabled = index === 0;
+  if (next) next.disabled = index === pages.length - 1;
+
+  document.querySelectorAll('.mobile-nav-dot').forEach((d, i) => d.classList.toggle('active', i === index));
+}
+
+function switchPage(btn) {
+  const pages = window._pages || [];
+  goToPage(pages.indexOf(btn.dataset.page));
+}
+
+function mobileNav(dir) {
+  const pages = window._pages || [];
+  goToPage(Math.max(0, Math.min(pages.length - 1, (window._currentPage || 0) + dir)));
+}
+
+// ─────────────────────────────────────────────
+// Boot — load content from JSON
+// ─────────────────────────────────────────────
+(async function boot() {
+  // Get slug from URL: /experiment/slug or ?slug=slug
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  let slug = pathParts[pathParts.length - 1];
+
+  // Fallback to query param
+  if (!slug || slug === 'experiment.html') {
+    const params = new URLSearchParams(window.location.search);
+    slug = params.get('slug') || 'filter-component-iteration';
+  }
+
+  try {
+    const res = await fetch(`/content/experiments/${slug}.json`);
+    if (!res.ok) throw new Error(`Not found: ${slug}`);
+    const data = await res.json();
+    renderExperiment(data);
+  } catch (err) {
+    document.getElementById('main').innerHTML = `
+      <div class="loading">Experiment not found · ${err.message}</div>`;
+  }
+})();
+
+// Netlify Identity redirect
+if (window.netlifyIdentity) {
+  window.netlifyIdentity.on('init', user => {
+    if (!user) {
+      window.netlifyIdentity.on('login', () => document.location.href = '/admin/');
+    }
+  });
+}
+</script>
+</body>
+</html>
