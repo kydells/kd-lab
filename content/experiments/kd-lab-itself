@@ -1,0 +1,200 @@
+{
+  "number": "02",
+  "title": "kd.lab",
+  "title_italic": "itself",
+  "date": "Mar 24, 2026",
+  "summary": "Started with a Shopify design gallery video and ended up with a live website. A full session building a public-facing experiment diary from scratch — design, infrastructure, CMS, and DNS in one sitting. The experiment documents its own blind spot: we built a mile-marking tool without mile-marking the build.",
+  "tag": "AI + Design + Build",
+  "status": "wip",
+  "tools": ["Claude Sonnet", "HTML / CSS", "GitHub", "Netlify", "Decap CMS", "Namecheap"],
+
+  "header_artifact": {
+    "label": "lab.kyliedella.com",
+    "subtitle": "live site",
+    "interactive": true,
+    "url": "https://lab.kyliedella.com",
+    "url_label": "lab.kyliedella.com",
+    "image": null
+  },
+
+  "pages": [
+    {
+      "label": "Concept",
+      "id": "concept",
+      "tiles": [
+        {
+          "type": "image",
+          "size": "large",
+          "eyebrow": "Shopify's internal design gallery · inspiration",
+          "image": null,
+          "image_alt": "Screenshots from the Shopify design gallery video"
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "The spark",
+          "body": "A YouTube video about Shopify's internal tool for designers to share experiments. 200+ designers, a feed of dynamic tiles, a canvas of mixed artifact types. I've always wanted something like this.",
+          "footer": null
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "Two products, not one",
+          "body": "Realized mid-conversation there were actually two things: a *collaborative team tool* (like GitHub for design process) and a *personal public diary*. Tabled the team tool. Built the diary.",
+          "footer": null
+        },
+        {
+          "type": "annotation",
+          "size": "small",
+          "eyebrow": "The steel thread",
+          "body": "One experiment page. Tile-based canvas. Three tile types to start. Polished container, messy content.",
+          "footer": null
+        }
+      ]
+    },
+    {
+      "label": "Design",
+      "id": "design",
+      "tiles": [
+        {
+          "type": "image",
+          "size": "large",
+          "eyebrow": "First render · jaw dropped",
+          "image": null,
+          "image_alt": "First version of the experiment page prototype"
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "What landed immediately",
+          "body": "The header felt like a notebook — experiment number, date, tag, title with an italic word, tools pills. None of that was asked for. It just appeared and was exactly right.",
+          "footer": null
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "The page nav problem",
+          "body": "Went through three iterations to get the width right. Nav pill needed to *break out* of the content column while keeping label text aligned with it. Two column widths: `--wide-width` and `--col-width`.",
+          "footer": null
+        },
+        {
+          "type": "annotation",
+          "size": "small",
+          "eyebrow": "Tile hover intention",
+          "body": "Lift + shadow reads as 'click me to go somewhere.' Annotation tiles don't go anywhere. Removed the lift. Only link tile arrows move.",
+          "footer": null
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "WIP vs Final",
+          "body": "Final artifact: solid border, settled. WIP: animated dashed border, diagonal stripe background. The *feeling* communicates before the badge does.",
+          "footer": null
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "Footer evolution",
+          "body": "Started as cards. Wrong — read like more canvas tiles. Stripped to open layout on cream background, no white boxes. Lift on hover, bigger arrow nudge. Reads like the header now.",
+          "footer": null
+        }
+      ]
+    },
+    {
+      "label": "Build",
+      "id": "build",
+      "tiles": [
+        {
+          "type": "annotation",
+          "size": "large",
+          "eyebrow": "The infrastructure decision",
+          "body": "Static HTML was fine for the prototype. For 4–7 experiments a month over a year, it would become painful around experiment 10. Chose Netlify + Decap CMS + GitHub: git-backed, no server to maintain, real admin UI, auto-deploys.",
+          "footer": "Option B of four considered"
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "JS-driven template",
+          "body": "One `experiment.html` reads any content JSON file. Update the design once, every experiment inherits it. The alternative — one HTML file per experiment — would have been a maintenance nightmare.",
+          "footer": null
+        },
+        {
+          "type": "link",
+          "size": "medium",
+          "link_type": "Artifact",
+          "link_title": "GitHub repo — kydells/kd-lab",
+          "url": "https://github.com/kydells/kd-lab",
+          "link_url_label": "github.com/kydells/kd-lab"
+        },
+        {
+          "type": "annotation",
+          "size": "small",
+          "eyebrow": "The tar file moment",
+          "body": "Tried to hand over the repo as a downloadable tar file. She can't download files from Claude. Ended up copy-pasting 6 files one at a time into GitHub's web UI. Very on brand.",
+          "footer": null
+        },
+        {
+          "type": "link",
+          "size": "medium",
+          "link_type": "Artifact",
+          "link_title": "Live site — lab.kyliedella.com",
+          "url": "https://lab.kyliedella.com",
+          "link_url_label": "lab.kyliedella.com"
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "CMS is live",
+          "body": "Decap CMS at `/admin`, protected by Netlify Identity. Git Gateway connects saves to GitHub. Every experiment published through the form becomes a commit. 'New Experiment' button exists. It works.",
+          "footer": null
+        }
+      ]
+    },
+    {
+      "label": "Reflection",
+      "id": "reflection",
+      "tiles": [
+        {
+          "type": "annotation",
+          "size": "large",
+          "eyebrow": "The blind spot",
+          "body": "Built a mile-marking tool without mile-marking the build. Design iterations were written over instead of versioned. The screenshots from earlier states exist only in the chat history. *The experiment documents its own problem.*",
+          "footer": null
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "What the skill fixes",
+          "body": "The lab-session skill was written at the end of this session specifically because of this failure. Next session: `/mark` after every meaningful state. `/artifact` for every file produced. `/wrap` generates the CMS JSON.",
+          "footer": null
+        },
+        {
+          "type": "annotation",
+          "size": "medium",
+          "eyebrow": "Honest grade",
+          "body": "A− for output, C for process documentation. The site is real, the CMS works, the skill exists. The build artifacts are gone.",
+          "footer": null
+        },
+        {
+          "type": "annotation",
+          "size": "small",
+          "eyebrow": "Time spent",
+          "body": "One full session, March 24 2026. Concept to live URL in a single sitting.",
+          "footer": null
+        }
+      ]
+    }
+  ],
+
+  "prev_experiment": {
+    "slug": "filter-component-iteration",
+    "number": "01",
+    "title": "Filter Component",
+    "title_italic": "Iteration",
+    "date": "Jan 29, 2026",
+    "tag": "AI + Design",
+    "thumbnail": null
+  },
+
+  "next_experiment": null
+}
