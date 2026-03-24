@@ -1,0 +1,199 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/experiments"
+public_folder: "/assets/experiments"
+
+collections:
+  - name: "experiments"
+    label: "Experiments"
+    label_singular: "Experiment"
+    folder: "content/experiments"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "title"
+    summary: "{{number}} · {{title}} · {{date}}"
+    sortable_fields: ["number", "date"]
+    fields:
+
+      - label: "Experiment Number"
+        name: "number"
+        widget: "string"
+        hint: "e.g. 01"
+
+      - label: "Title"
+        name: "title"
+        widget: "string"
+
+      - label: "Title Italic Word(s)"
+        name: "title_italic"
+        widget: "string"
+        hint: "The italicized portion of the title (e.g. 'Iteration')"
+        required: false
+
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+        format: "MMM DD, YYYY"
+        date_format: "MMM DD, YYYY"
+        time_format: false
+
+      - label: "Summary"
+        name: "summary"
+        widget: "text"
+        hint: "2-3 sentences. Shown in the header."
+
+      - label: "Category Tag"
+        name: "tag"
+        widget: "string"
+        hint: "e.g. AI + Design"
+
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options:
+          - { label: "Final Artifact", value: "final" }
+          - { label: "In Progress", value: "wip" }
+
+      - label: "Tools Used"
+        name: "tools"
+        widget: "list"
+        allow_add: true
+        field:
+          label: "Tool"
+          name: "tool"
+          widget: "string"
+
+      - label: "Header Artifact"
+        name: "header_artifact"
+        widget: "object"
+        fields:
+          - label: "Label"
+            name: "label"
+            widget: "string"
+          - label: "Subtitle"
+            name: "subtitle"
+            widget: "string"
+            required: false
+          - label: "Is Interactive"
+            name: "interactive"
+            widget: "boolean"
+            default: false
+          - label: "Link URL"
+            name: "url"
+            widget: "string"
+            required: false
+          - label: "Link Label"
+            name: "url_label"
+            widget: "string"
+            required: false
+          - label: "Preview Image"
+            name: "image"
+            widget: "image"
+            required: false
+
+      - label: "Pages"
+        name: "pages"
+        widget: "list"
+        allow_add: true
+        summary: "{{fields.label}}"
+        fields:
+          - label: "Page Label"
+            name: "label"
+            widget: "string"
+            hint: "e.g. Discovery"
+          - label: "Page ID"
+            name: "id"
+            widget: "string"
+            hint: "Lowercase, no spaces (e.g. discovery)"
+          - label: "Tiles"
+            name: "tiles"
+            widget: "list"
+            allow_add: true
+            summary: "{{fields.type}} · {{fields.eyebrow}}"
+            fields:
+              - label: "Tile Type"
+                name: "type"
+                widget: "select"
+                options:
+                  - { label: "Image / Screenshot", value: "image" }
+                  - { label: "Annotation", value: "annotation" }
+                  - { label: "Link / Prototype", value: "link" }
+              - label: "Size"
+                name: "size"
+                widget: "select"
+                options:
+                  - { label: "Large (anchors a row)", value: "large" }
+                  - { label: "Medium", value: "medium" }
+                  - { label: "Small", value: "small" }
+                default: "medium"
+              - label: "Eyebrow"
+                name: "eyebrow"
+                widget: "string"
+                required: false
+              - label: "Body Text"
+                name: "body"
+                widget: "text"
+                hint: "Use *asterisks* for italic."
+                required: false
+              - label: "Footer Note"
+                name: "footer"
+                widget: "string"
+                required: false
+              - label: "Image"
+                name: "image"
+                widget: "image"
+                required: false
+              - label: "Image Alt Text"
+                name: "image_alt"
+                widget: "string"
+                required: false
+              - label: "Link URL"
+                name: "url"
+                widget: "string"
+                required: false
+              - label: "Link Type Badge"
+                name: "link_type"
+                widget: "select"
+                required: false
+                options:
+                  - { label: "Prototype", value: "Prototype" }
+                  - { label: "Chat Snippet", value: "Chat snippet" }
+                  - { label: "Figma", value: "Figma" }
+                  - { label: "Video", value: "Video" }
+                  - { label: "Artifact", value: "Artifact" }
+              - label: "Link Title"
+                name: "link_title"
+                widget: "string"
+                required: false
+              - label: "Link URL Label"
+                name: "link_url_label"
+                widget: "string"
+                required: false
+
+      - label: "Previous Experiment"
+        name: "prev_experiment"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "Slug", name: "slug", widget: "string", required: false }
+          - { label: "Number", name: "number", widget: "string", required: false }
+          - { label: "Title", name: "title", widget: "string", required: false }
+          - { label: "Title Italic", name: "title_italic", widget: "string", required: false }
+          - { label: "Date", name: "date", widget: "string", required: false }
+          - { label: "Tag", name: "tag", widget: "string", required: false }
+          - { label: "Thumbnail", name: "thumbnail", widget: "image", required: false }
+
+      - label: "Next Experiment"
+        name: "next_experiment"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "Slug", name: "slug", widget: "string", required: false }
+          - { label: "Number", name: "number", widget: "string", required: false }
+          - { label: "Title", name: "title", widget: "string", required: false }
+          - { label: "Title Italic", name: "title_italic", widget: "string", required: false }
+          - { label: "Date", name: "date", widget: "string", required: false }
+          - { label: "Tag", name: "tag", widget: "string", required: false }
+          - { label: "Thumbnail", name: "thumbnail", widget: "image", required: false }
